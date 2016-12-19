@@ -252,8 +252,7 @@ Install postman
 
 * you should see a message returned as `Hello World`
 
-## Random fortune
-[fortune](https://github.com/bamtron5/nodeExamples/blob/master/demo/1/fortune.js)
+## Random fortune [fortune](https://github.com/bamtron5/nodeExamples/blob/master/demo/1/fortune.js)
 
 ## Sum of process.argv numbers on NODE [LAB1+](https://github.com/bamtron5/nodeExamples/blob/master/demo/1/lab1.js)
 
@@ -311,3 +310,7 @@ router.post('/products', (req, res, next) => {
 
 export = router;
 ```
+
+*test*
+`npm start` from `./demo/1`
+check your db for 100 products
