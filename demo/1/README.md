@@ -252,7 +252,10 @@ Install postman
 
 * you should see a message returned as `Hello World`
 
-## Sum of process.argv numbers on NODE [LAB1](https://github.com/bamtron5/nodeExamples/blob/master/demo/1/lab1.js)
+## Random fortune
+[fortune](https://github.com/bamtron5/nodeExamples/blob/master/demo/1/fortune.js)
+
+## Sum of process.argv numbers on NODE [LAB1+](https://github.com/bamtron5/nodeExamples/blob/master/demo/1/lab1.js)
 
 ## LAB 2 Generate 100 products with different names, prices, and IDs
 
