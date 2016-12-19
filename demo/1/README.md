@@ -252,11 +252,59 @@ Install postman
 
 * you should see a message returned as `Hello World`
 
-# Sum of process.argv numbers on NODE [LAB1](https://github.com/bamtron5/nodeExamples/blob/master/demo/1/lab1.js)
+## Sum of process.argv numbers on NODE [LAB1](https://github.com/bamtron5/nodeExamples/blob/master/demo/1/lab1.js)
 
-# LAB 2 Generate 100 products with different names, prices, and IDs
+## LAB 2 Generate 100 products with different names, prices, and IDs
 
-## Install packages
+### Install packages
 `npm i --save mongoose mongodb @types/mongoose @types/mongodb`
 
 *add `./models/products.ts`*
+
+```javascript
+import * as mongoose from 'mongoose';
+
+export interface IProducts extends mongoose.Document {
+  name: string,
+  price: number
+}
+
+let ProductSchema = new mongoose.Schema({
+  name: String,
+  price: Number
+});
+
+//sets to
+ProductSchema.path('price').set(function(num) {
+  return (num / 100).toFixed(2);
+});
+
+//Sets to 2 decimal on float
+ProductSchema.path('price').get(function(num) {
+  return (num).toFixed(2);
+});
+
+export default mongoose.model<IProducts>("Product", ProductSchema);
+```
+
+*create `./api/products`*
+
+```javascript
+import * as express from 'express';
+import Product from '../models/products';
+let router = express.Router();
+import * as mongoose from 'mongoose';
+
+router.post('/products', (req, res, next) => {
+  let product = new Product();
+  product.name = req.body.name;
+  product.price = req.body.price;
+  product.save().then((p) => {
+    res.json(p);
+  }).catch((e) => {
+    res.status(500).json({message: e});
+  })
+});
+
+export = router;
+```
