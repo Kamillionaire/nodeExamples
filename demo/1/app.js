@@ -2,11 +2,20 @@
 var express = require("express");
 var bodyParser = require("body-parser");
 var path = require("path");
+var mongoose = require("mongoose");
 var app = express();
 if (app.get('env') === 'development') {
     var dotenv = require('dotenv');
     dotenv.load();
 }
+mongoose.connect(process.env.MONGO_URI);
+mongoose.connection.on('connected', function () {
+    console.log('mongoose connected');
+});
+mongoose.connection.on('error', function () {
+    console.log('mongoose error');
+    process.exit();
+});
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, 'public')));
@@ -14,6 +23,10 @@ app.use('/bower_components', express.static(path.join(__dirname, 'bower_componen
 app.use('/node_modules', express.static(path.join(__dirname, 'node_modules')));
 app.use('/ngApp', express.static(path.join(__dirname, 'ngApp')));
 app.use('/api', require('./api/users'));
+app.use('/api', require('./api/products'));
+if (app.get('env') === 'development') {
+    require('./seeds/products');
+}
 app.get('/*', function (req, res, next) {
     if (/.js|.html|.css|templates|js|scripts/.test(req.path) || req.xhr) {
         return next({ status: 404, message: 'Not Found' });

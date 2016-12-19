@@ -1,7 +1,7 @@
 import * as express from 'express';
 import * as bodyParser from 'body-parser';
 import * as path from 'path';
-// import routes from './routes/index';
+import * as mongoose from 'mongoose';
 let app = express();
 
 //for development env variables
@@ -9,6 +9,17 @@ if (app.get('env') === 'development') {
   let dotenv = require('dotenv');
   dotenv.load();
 }
+
+mongoose.connect(process.env.MONGO_URI);
+
+mongoose.connection.on('connected', () => {
+  console.log('mongoose connected');
+});
+
+mongoose.connection.on('error', () => {
+  console.log('mongoose error');
+  process.exit();
+});
 
 //console.log(process.env.A_SECRET_KEY);
 
@@ -24,6 +35,12 @@ app.use('/ngApp', express.static(path.join(__dirname, 'ngApp')));
 
 //bootstrap /api
 app.use('/api', require('./api/users'));
+app.use('/api', require('./api/products'));
+
+//seed script for products
+if(app.get('env') === 'development') {
+  require('./seeds/products');
+}
 
 // redirect 404 to home for the sake of AngularJS client-side routes
 app.get('/*', function(req, res, next) {

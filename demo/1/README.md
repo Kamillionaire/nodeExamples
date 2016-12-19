@@ -251,3 +251,12 @@ Install postman
 *create a get request to `localhost:3000/api/users`*
 
 * you should see a message returned as `Hello World`
+
+# Sum of process.argv numbers on NODE [LAB1](https://github.com/bamtron5/nodeExamples/blob/master/demo/1/lab1.js)
+
+# LAB 2 Generate 100 products with different names, prices, and IDs
+
+## Install packages
+`npm i --save mongoose mongodb @types/mongoose @types/mongodb`
+
+*add `./models/products.ts`*
