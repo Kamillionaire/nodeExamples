@@ -12,8 +12,8 @@ mongoose.connect(process.env.MONGO_URI);
 mongoose.connection.on('connected', function () {
     console.log('mongoose connected');
 });
-mongoose.connection.on('error', function () {
-    console.log('mongoose error');
+mongoose.connection.on('error', function (e) {
+    console.log('mongoose error', e);
     process.exit();
 });
 app.use(bodyParser.json());

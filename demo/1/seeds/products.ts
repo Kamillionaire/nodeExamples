@@ -1,5 +1,4 @@
 import Product from '../models/products';
- 
 Product.find().count((err, c:number) => {
   if(c <= 0) {
     for(let i = 0; i < 100; i++) {
